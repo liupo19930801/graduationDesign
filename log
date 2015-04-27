@@ -1,126 +1,62 @@
-Contents of the .debug_info section:
+info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040056c in main 
+                                                   at a.c:19
+2       breakpoint     keep y   0x0000000000400537 in sum 
+                                                   at a.c:13
+(gdb) run
+Starting program: /home/primo/workspace/graduationDesign/DEBUG_TOOL_WITH_LOG_exefile 
+warning: the debug information found in "/lib64/ld-2.19.so" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
 
-  Compilation Unit @ offset 0x0:
-   Length:        0xf2 (32-bit)
-   版本：        4
-   Abbrev Offset: 0x0
-   指针大小：    4
- <0><b>: Abbrev Number: 1 (DW_TAG_compile_unit)
-    <c>   DW_AT_producer    : (indirect string, offset: 0x38): GNU C 4.8.2 -mtune=generic -march=i686 -g -fstack-protector	
-    <10>   DW_AT_language    : 1	(ANSI C)
-    <11>   DW_AT_name        : a.c	
-    <15>   DW_AT_comp_dir    : (indirect string, offset: 0x74): /home/primo/workspace/homework	
-    <19>   DW_AT_low_pc      : 0x804841d	
-    <1d>   DW_AT_high_pc     : 0x87	
-    <21>   DW_AT_stmt_list   : 0x0	
- <1><25>: Abbrev Number: 2 (DW_TAG_base_type)
-    <26>   DW_AT_byte_size   : 4	
-    <27>   DW_AT_encoding    : 7	(unsigned)
-    <28>   DW_AT_name        : (indirect string, offset: 0x2b): unsigned int	
- <1><2c>: Abbrev Number: 2 (DW_TAG_base_type)
-    <2d>   DW_AT_byte_size   : 1	
-    <2e>   DW_AT_encoding    : 8	(unsigned char)
-    <2f>   DW_AT_name        : (indirect string, offset: 0x93): unsigned char	
- <1><33>: Abbrev Number: 2 (DW_TAG_base_type)
-    <34>   DW_AT_byte_size   : 2	
-    <35>   DW_AT_encoding    : 7	(unsigned)
-    <36>   DW_AT_name        : (indirect string, offset: 0xe): short unsigned int	
- <1><3a>: Abbrev Number: 2 (DW_TAG_base_type)
-    <3b>   DW_AT_byte_size   : 4	
-    <3c>   DW_AT_encoding    : 7	(unsigned)
-    <3d>   DW_AT_name        : (indirect string, offset: 0x26): long unsigned int	
- <1><41>: Abbrev Number: 2 (DW_TAG_base_type)
-    <42>   DW_AT_byte_size   : 1	
-    <43>   DW_AT_encoding    : 6	(signed char)
-    <44>   DW_AT_name        : (indirect string, offset: 0x95): signed char	
- <1><48>: Abbrev Number: 2 (DW_TAG_base_type)
-    <49>   DW_AT_byte_size   : 2	
-    <4a>   DW_AT_encoding    : 5	(signed)
-    <4b>   DW_AT_name        : (indirect string, offset: 0xa6): short int	
- <1><4f>: Abbrev Number: 3 (DW_TAG_base_type)
-    <50>   DW_AT_byte_size   : 4	
-    <51>   DW_AT_encoding    : 5	(signed)
-    <52>   DW_AT_name        : int	
- <1><56>: Abbrev Number: 2 (DW_TAG_base_type)
-    <57>   DW_AT_byte_size   : 8	
-    <58>   DW_AT_encoding    : 5	(signed)
-    <59>   DW_AT_name        : (indirect string, offset: 0x0): long long int	
- <1><5d>: Abbrev Number: 2 (DW_TAG_base_type)
-    <5e>   DW_AT_byte_size   : 8	
-    <5f>   DW_AT_encoding    : 7	(unsigned)
-    <60>   DW_AT_name        : (indirect string, offset: 0x21): long long unsigned int	
- <1><64>: Abbrev Number: 2 (DW_TAG_base_type)
-    <65>   DW_AT_byte_size   : 4	
-    <66>   DW_AT_encoding    : 5	(signed)
-    <67>   DW_AT_name        : (indirect string, offset: 0x5): long int	
- <1><6b>: Abbrev Number: 2 (DW_TAG_base_type)
-    <6c>   DW_AT_byte_size   : 4	
-    <6d>   DW_AT_encoding    : 7	(unsigned)
-    <6e>   DW_AT_name        : (indirect string, offset: 0xb0): sizetype	
- <1><72>: Abbrev Number: 2 (DW_TAG_base_type)
-    <73>   DW_AT_byte_size   : 1	
-    <74>   DW_AT_encoding    : 6	(signed char)
-    <75>   DW_AT_name        : (indirect string, offset: 0x9c): char	
- <1><79>: Abbrev Number: 4 (DW_TAG_subprogram)
-    <7a>   DW_AT_external    : 1	
-    <7a>   DW_AT_name        : sum	
-    <7e>   DW_AT_decl_file   : 1	
-    <7f>   DW_AT_decl_line   : 11	
-    <80>   DW_AT_prototyped  : 1	
-    <80>   DW_AT_type        : <0x4f>	
-    <84>   DW_AT_low_pc      : 0x804841d	
-    <88>   DW_AT_high_pc     : 0x33	
-    <8c>   DW_AT_frame_base  : 1 byte block: 9c 	(DW_OP_call_frame_cfa)
-    <8e>   DW_AT_GNU_all_call_sites: 1	
-    <8e>   DW_AT_sibling     : <0xb7>	
- <2><92>: Abbrev Number: 5 (DW_TAG_formal_parameter)
-    <93>   DW_AT_name        : a	
-    <95>   DW_AT_decl_file   : 1	
-    <96>   DW_AT_decl_line   : 11	
-    <97>   DW_AT_type        : <0x4f>	
-    <9b>   DW_AT_location    : 2 byte block: 91 0 	(DW_OP_fbreg: 0)
- <2><9e>: Abbrev Number: 5 (DW_TAG_formal_parameter)
-    <9f>   DW_AT_name        : b	
-    <a1>   DW_AT_decl_file   : 1	
-    <a2>   DW_AT_decl_line   : 11	
-    <a3>   DW_AT_type        : <0x4f>	
-    <a7>   DW_AT_location    : 2 byte block: 91 4 	(DW_OP_fbreg: 4)
- <2><aa>: Abbrev Number: 6 (DW_TAG_variable)
-    <ab>   DW_AT_name        : c	
-    <ad>   DW_AT_decl_file   : 1	
-    <ae>   DW_AT_decl_line   : 13	
-    <af>   DW_AT_type        : <0xb7>	
-    <b3>   DW_AT_location    : 2 byte block: 91 64 	(DW_OP_fbreg: -28)
- <2><b6>: Abbrev Number: 0
- <1><b7>: Abbrev Number: 7 (DW_TAG_array_type)
-    <b8>   DW_AT_type        : <0x4f>	
-    <bc>   DW_AT_sibling     : <0xc7>	
- <2><c0>: Abbrev Number: 8 (DW_TAG_subrange_type)
-    <c1>   DW_AT_type        : <0x6b>	
-    <c5>   DW_AT_upper_bound : 4	
- <2><c6>: Abbrev Number: 0
- <1><c7>: Abbrev Number: 9 (DW_TAG_subprogram)
-    <c8>   DW_AT_external    : 1	
-    <c8>   DW_AT_name        : (indirect string, offset: 0xa1): main	
-    <cc>   DW_AT_decl_file   : 1	
-    <cd>   DW_AT_decl_line   : 17	
-    <ce>   DW_AT_type        : <0x4f>	
-    <d2>   DW_AT_low_pc      : 0x8048450	
-    <d6>   DW_AT_high_pc     : 0x54	
-    <da>   DW_AT_frame_base  : 1 byte block: 9c 	(DW_OP_call_frame_cfa)
-    <dc>   DW_AT_GNU_all_tail_call_sites: 1	
- <2><dc>: Abbrev Number: 6 (DW_TAG_variable)
-    <dd>   DW_AT_name        : a	
-    <df>   DW_AT_decl_file   : 1	
-    <e0>   DW_AT_decl_line   : 19	
-    <e1>   DW_AT_type        : <0x4f>	
-    <e5>   DW_AT_location    : 2 byte block: 74 18 	(DW_OP_breg4 (esp): 24)
- <2><e8>: Abbrev Number: 6 (DW_TAG_variable)
-    <e9>   DW_AT_name        : b	
-    <eb>   DW_AT_decl_file   : 1	
-    <ec>   DW_AT_decl_line   : 20	
-    <ed>   DW_AT_type        : <0x4f>	
-    <f1>   DW_AT_location    : 2 byte block: 74 1c 	(DW_OP_breg4 (esp): 28)
- <2><f4>: Abbrev Number: 0
- <1><f5>: Abbrev Number: 0
 
+Breakpoint 1, main () at a.c:19
+19	    int a = 3;
+(gdb) info source
+Current source file is a.c
+Compilation directory is /home/primo/workspace/graduationDesign
+Located in /home/primo/workspace/graduationDesign/a.c
+Contains 23 lines.
+Source language is c.
+Compiled with DWARF 2 debugging format.
+Does not include preprocessor macro info.
+(gdb) info local
+a = 0
+b = 0
+(gdb) next
+20	    int b = 4;
+(gdb) info local
+a = 3
+b = 0
+(gdb) next
+21	    printf("%d + %d = %d\n", a, b, sum(a, b));
+(gdb) info local
+a = 3
+b = 4
+(gdb) next
+
+Breakpoint 2, sum (a=3, b=4) at a.c:13
+13	    int c[] = {1, 2,3, 4, 546};
+(gdb) info local
+c = {1, 0, 4195837, 0, 0}
+(gdb) next
+14	    return a+b;
+(gdb) info local
+c = {1, 2, 3, 4, 546}
+(gdb) next
+15	}
+(gdb) info local
+c = {1, 2, 3, 4, 546}
+(gdb) next
+3 + 4 = 7
+main () at a.c:22
+22	    return 0;
+(gdb) info local
+a = 3
+b = 4
+(gdb) next
+23	}
+(gdb) info local
+a = 3
+b = 4
+(gdb) next
+__libc_start_main (main=0x400564 <main>, argc=1, 

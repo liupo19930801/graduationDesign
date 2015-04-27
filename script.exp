@@ -1,0 +1,65 @@
+#!/usr/bin/expect 
+
+
+#if {$argc < 2}{
+#    puts stdout "$argv0 err pararms\n"
+#    exit 1
+#}
+
+set timeout 3
+
+if {$argc != 1} {
+    puts "-------------------------------------------------------------"
+    puts ""
+    puts "===> WARNNING: Pararms is illegal !!!"
+    puts "===> ++++++++ The correct number of parameters is only one !!!"
+    puts ""
+    puts "-------------------------------------------------------------"
+    exit
+}
+
+
+set SOURCEFILE [lindex $argv 0]
+
+set DEBUGFILE "DEBUG_TOOL_WITH_LOG_exefile"
+
+exec rm log
+
+exec  gcc -g $SOURCEFILE -o $DEBUGFILE
+
+spawn  gdb -q $DEBUGFILE 
+
+expect "(gdb)" { send "rbreak a.c:.\r" }
+
+expect "(gdb)" { send "info break\r" }
+
+log_file log
+
+expect "(gdb)" { send "run\r" }
+
+expect "(gdb)" { send "info source\r"  }
+
+while {1} {
+
+    expect {
+       
+        "__libc_start_main"
+        {
+            log_file
+            send "quit\r"
+            send "y\r"
+            break
+        }
+        "(gdb)"
+        {
+            send "info local\r"
+            send "next\r"
+        } 
+    }
+    
+}
+
+
+exec rm $DEBUGFILE
+
+exit 1 
