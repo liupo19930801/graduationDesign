@@ -1,0 +1,59 @@
+####################################################################
+#HELLO,BODY,WELCOME USE MY LOG_DEBUG_TOOL!                         #
+#@AUTHOR:LiuPo                                                     #
+#@VERESION:1.0                                                     #
+#@EMAIL:liupopublic@163.com                                        #
+#@WEIBO:primo_001                                                  #
+####################################################################
+
+
+
+
+Partion-1ST:
+--------------------------------------------------------------------
+
+FILE{
+
+===> FILE:
+b.c
+===> DIRECTION:
+/home/primo/workspace/graduationDesign
+===> LOCATION:
+/home/primo/workspace/graduationDesign/b.c
+===> LINES:
+15
+===> LANGUAGE:
+c.
+===> DEBUG_FORMAT:
+DWARF 2
+
+}
+
+--------------------------------------------------------------------
+
+
+
+
+Partion-2ND:
+--------------------------------------------------------------------
+
+RUN:{
+
+===> POSITION:
+12	    printf("heelo\n");
+===> INFO
+No locals.
+===> POSITION:
+13	    return 0;
+===> INFO:
+No locals.
+===> POSITION:
+14	}
+===> INFO:
+No locals.
+===> POSITION:
+[:--end of file--:]
+
+}
+
+--------------------------------------------------------------------

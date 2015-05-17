@@ -1,0 +1,12 @@
+#!/bin/bash
+
+NUM=$#
+
+for value in $*; do
+    echo ${value}
+    bash auto-debug ${value}
+    echo "------------------"
+done
+
+echo $#
+

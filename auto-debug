@@ -1,0 +1,18 @@
+#!/bin/bash
+
+__sourcefilename__=$1
+__logFilter__=./LogFilter
+__logfilename__=log
+__newlogfilename__=${__sourcefilename__}.log
+__expectscript__=script.exp
+
+echo ${__sourcefilename__}
+
+expect ${__expectscript__} ${__sourcefilename__}
+
+dos2unix ${__logfilename__}
+
+${__logFilter__} ${__logfilename__} ${__newlogfilename__}
+
+rm ${__logfilename__}
+

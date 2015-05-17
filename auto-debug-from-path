@@ -1,0 +1,15 @@
+#!/bin/bash
+
+__path__=$1
+
+__filelist__=`ls $__path__`
+
+echo $__path__
+echo "------------"
+echo $__filelist__
+
+for __filename__ in $__filelist__
+do
+    echo ------$__filename__
+    bash auto-debug $__filename__
+done
