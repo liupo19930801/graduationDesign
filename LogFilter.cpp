@@ -14,10 +14,10 @@
 using namespace std;
 
 #define ENDOFFILE 0x0
-#define GDB_NEXT "(gdb) next\r"
-#define GDB_LOCAL "(gdb) info local\r"
-#define GDB_SOURCE "(gdb) info source\r"
-#define GDB_RUN "(gdb) run\r"
+#define GDB_NEXT "(gdb) next"
+#define GDB_LOCAL "(gdb) info local"
+#define GDB_SOURCE "(gdb) info source"
+#define GDB_RUN "(gdb) run > /dev/null"
 
 const int BUFFERSIZE = 1024+5;
 
@@ -170,7 +170,7 @@ bool LogFilter::handleNextSource()
     while(true)
     {
         char *buffer = getNextLine();
-
+        
         if(buffer == ENDOFFILE) return false;
 
         if(strcmp(buffer, GDB_LOCAL) == 0)
@@ -178,15 +178,24 @@ bool LogFilter::handleNextSource()
             delete []buffer;
             break;
         }
-        else if(( buffer[0] == '\r')
+        else if(( buffer[0] == '\0')
                 || (buffer[BUFFERSIZE-1] = buffer[11],
-                        buffer[10] = 0,
-                        buffer[BUFFERSIZE-2] = strcmp(buffer, "Breakpoint"),
-                        buffer[10]=buffer[BUFFERSIZE-1],
+                        buffer[11] = '\0',
+                        buffer[BUFFERSIZE-2] = strcmp(buffer, "Breakpoint "),
+                        buffer[11]=buffer[BUFFERSIZE-1],
                         buffer[BUFFERSIZE-2]==0))
         {
             delete []buffer;
             continue;
+        }
+        else if(buffer[BUFFERSIZE-1] = buffer[18],
+               buffer[18] = '\0',
+               buffer[BUFFERSIZE-2] = strcmp(buffer, "__libc_start_main "),
+               buffer[18] = buffer[BUFFERSIZE-1],
+               buffer[BUFFERSIZE-2] == 0)
+        {
+            writeLineToFile("[:--end of file--:]");
+            return false;
         }
         writeLineToFile(buffer);
         delete []buffer;
@@ -211,11 +220,11 @@ bool LogFilter::handleRunEntity()
             break;
         }
     }
-    getNextLine(); getNextLine();getNextLine();
+    getNextLine(); getNextLine();
     writeLineToFile("===> POSITION:");
     while(true)
     {
-        const char *buffer = getNextLine();
+        char *buffer = getNextLine();
 
         if(buffer == ENDOFFILE) return false;
 
@@ -223,6 +232,16 @@ bool LogFilter::handleRunEntity()
         {
             delete []buffer;
             break;
+        }
+        else if((buffer[0] == '\0') 
+               || (buffer[BUFFERSIZE-1] = buffer[11],
+                   buffer[11] = '\0',
+                   buffer[BUFFERSIZE-2]=strcmp(buffer,"Breakpoint "),
+                   buffer[11]=buffer[BUFFERSIZE-1],
+                   buffer[BUFFERSIZE-2] == 0 ))
+        {
+            delete []buffer;
+            continue;
         }
         writeLineToFile(buffer);
         delete []buffer;
@@ -355,7 +374,6 @@ bool LogFilter::handleEntities()
 {
     this->openFileForRead();
     this->openFileForWrite();
-
     writeLineToFile("####################################################################");
     writeLineToFile("#HELLO,BODY,WELCOME USE MY LOG_DEBUG_TOOL!                         #");
     writeLineToFile("#@AUTHOR:LiuPo                                                     #");
@@ -365,19 +383,31 @@ bool LogFilter::handleEntities()
     writeLineToFile("####################################################################");
 
     writeLineToFile("\n\n\n");
+    writeLineToFile("Partion-1ST:");
+    writeLineToFile("--------------------------------------------------------------------");
 
     //写入文件信息:FILE:{}
-    writeLineToFile("FILE{");
+    writeLineToFile("\nFILE{\n");
     handleSoureInfo();
-    writeLineToFile("}");
+    writeLineToFile("\n}\n");
     this->ifstream_pointer->seekg(0, ios_base::beg);
 
+    writeLineToFile("--------------------------------------------------------------------"); 
+
+
+    writeLineToFile("\n\n\n");
+    writeLineToFile("Partion-2ND:");
+    writeLineToFile("--------------------------------------------------------------------");
+
     //写入运行信息:RUN:{}
-    writeLineToFile("\nRUN:{");
+    writeLineToFile("\nRUN:{\n");
     //循环写入各条语句运行信息
     handleRunEntity();
     while(handleEntity()){}
-    writeLineToFile("}");
+    writeLineToFile("\n}\n");
+
+    writeLineToFile("--------------------------------------------------------------------");
+    
 
     this->closeFileForRead();
     this->closeFileForWrite();

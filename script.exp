@@ -23,19 +23,17 @@ set SOURCEFILE [lindex $argv 0]
 
 set DEBUGFILE "DEBUG_TOOL_WITH_LOG_exefile"
 
-exec rm log
-
 exec  gcc -g $SOURCEFILE -o $DEBUGFILE
 
 spawn  gdb -q $DEBUGFILE 
 
-expect "(gdb)" { send "rbreak a.c:.\r" }
+expect "(gdb)" { send "rbreak ${SOURCEFILE}:.\r" }
 
 expect "(gdb)" { send "info break\r" }
 
 log_file log
 
-expect "(gdb)" { send "run\r" }
+expect "(gdb)" { send "run > /dev/null\r" }
 
 expect "(gdb)" { send "info source\r"  }
 
