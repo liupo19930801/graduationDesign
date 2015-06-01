@@ -8,6 +8,10 @@
 #include<stdio.h>
 
 
+int a = 2;
+int b = -3;
+int z = 4;
+
 int sum(int a, int b)
 {
     int c[] = {1, 2,3, 4, 546};
@@ -16,7 +20,7 @@ int sum(int a, int b)
 
 int main()
 {
-    int a = 3;
+    static int a = 3;
     int b = 4;
     printf("%d + %d = %d\n", a, b, sum(a, b));
     return 0;
