@@ -1,14 +1,36 @@
 #!/usr/bin/expect 
 
 
-#if {$argc < 2}{
+proc getLine {fd line} {
+
+    upvar $line ln
+
+    while {[set lineLen [gets $fd ln]] >= 0} {
+
+        if { $lineLen == 0 } continue
+
+        set ln [string trim $ln]
+        if { [string length $ln] == 0 } continue
+
+        if { [string index $ln 0] == "#" } continue
+
+        return 1
+
+    }
+    
+    return 0
+    
+}
+
+
+#if {$argc < 2}{/
 #    puts stdout "$argv0 err pararms\n"
 #    exit 1
 #}
 
 set timeout 3
 
-if {$argc != 1} {
+if {$argc < 1} {
     puts "-------------------------------------------------------------"
     puts ""
     puts "===> WARNNING: Pararms is illegal !!!"
@@ -21,19 +43,52 @@ if {$argc != 1} {
 
 set SOURCEFILE [lindex $argv 0]
 
+set INPUTFILE "/dev/null"
+
+set OUTPUTFILE "/dev/null"
+
+if {$argc >= 2} {
+    set INPUTFILE [lindex $argv 1]
+}
+
+if {$argc >= 3} {
+    set OUTPUTFILE [lindex $argv 2]
+}
+
+
+puts $INPUTFILE
+
+puts $OUTPUTFILE
+
 set DEBUGFILE "DEBUG_TOOL_WITH_LOG_exefile"
+
+set LOGFILE "DEBUG_TOOL_WITH_LOG_logfile"
+
+set TMPFILE "DEBUG_TOOL_WITH_LOG_tmpfile"
 
 exec  gcc -g $SOURCEFILE -o $DEBUGFILE
 
-spawn  gdb -q $DEBUGFILE 
+exec ./DWARFInfoFileter $DEBUGFILE > $TMPFILE
+
+spawn  gdb -q $DEBUGFILE
+
+set cmdFd [open $TMPFILE]
+
+while { [getLine $cmdFd line] == 1} {
+
+    expect "(gdb)" { send "${line}\r"  }
+
+}
+
+close $cmdFd
 
 expect "(gdb)" { send "rbreak ${SOURCEFILE}:.\r" }
 
 expect "(gdb)" { send "info break\r" }
 
-log_file log
+log_file $LOGFILE
 
-expect "(gdb)" { send "run > /dev/null\r" }
+expect "(gdb)" { send "run < $INPUTFILE > $OUTPUTFILE\r" }
 
 expect "(gdb)" { send "info source\r"  }
 
@@ -59,5 +114,6 @@ while {1} {
 
 
 exec rm $DEBUGFILE
+exec rm $TMPFILE
 
 exit 1 

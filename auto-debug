@@ -1,14 +1,14 @@
 #!/bin/bash
 
 __sourcefilename__=$1
+__inputfilename__=$2
+__outputfilename__=$3
+__newlogfilename__=$4
 __logFilter__=./LogFilter
-__logfilename__=log
-__newlogfilename__=${__sourcefilename__}.log
+__logfilename__=DEBUG_TOOL_WITH_LOG_logfile
 __expectscript__=script.exp
 
-echo ${__sourcefilename__}
-
-expect ${__expectscript__} ${__sourcefilename__}
+expect ${__expectscript__} ${__sourcefilename__} ${__inputfilename__} ${__outputfilename__}
 
 dos2unix ${__logfilename__}
 

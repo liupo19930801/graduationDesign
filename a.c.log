@@ -21,7 +21,7 @@ a.c
 ===> LOCATION:
 /home/primo/workspace/graduationDesign/a.c
 ===> LINES:
-23
+38
 ===> LANGUAGE:
 c.
 ===> DEBUG_FORMAT:
@@ -40,45 +40,193 @@ Partion-2ND:
 RUN:{
 
 ===> POSITION:
-19	    int a = 3;
+35	    int b = 4;
 ===> INFO
-a = 0
-b = 0
-===> POSITION:
-info local
-next
-20	    int b = 4;
-===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
 a = 3
 b = 0
+-----------LOCAL-END---------------
 ===> POSITION:
-21	    printf("%d + %d = %d\n", a, b, sum(a, b));
+36	    printf("%d + %d = %d\n", a, b, sum(&a, b));
 ===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
 a = 3
 b = 4
+-----------LOCAL-END--------------
 ===> POSITION:
-13	    int c[] = {1, 2,3, 4, 546};
+27	    int c[] = {1, 2,3, 4, 546};
 ===> INFO:
-c = {1, 0, 4195837, 0, 0}
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
+c = {1, 0, 4195853, 0, 0}
+-----------LOCAL-END--------------
 ===> POSITION:
-14	    return a+b;
+28	    _f_();
 ===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
 c = {1, 2, 3, 4, 546}
+-----------LOCAL-END--------------
 ===> POSITION:
-15	}
+20	    int a = 3;
 ===> INFO:
-c = {1, 2, 3, 4, 546}
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
+a = 32767
+b = -8520
+-----------LOCAL-END--------------
 ===> POSITION:
-main () at a.c:22
-22	    return 0;
+21	    int b = 4;
 ===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
+a = 3
+b = -8520
+-----------LOCAL-END--------------
+===> POSITION:
+22	    printf("I am in _f_()");
+===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
 a = 3
 b = 4
+-----------LOCAL-END--------------
 ===> POSITION:
 23	}
 ===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
 a = 3
 b = 4
+-----------LOCAL-END--------------
+===> POSITION:
+29	    return *a+b;
+===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
+c = {1, 2, 3, 4, 546}
+-----------LOCAL-END--------------
+===> POSITION:
+30	}
+===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
+c = {1, 2, 3, 4, 546}
+-----------LOCAL-END--------------
+===> POSITION:
+37	    return 0;
+===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
+a = 3
+b = 4
+-----------LOCAL-END--------------
+===> POSITION:
+38	}
+===> INFO:
+-----------GLOBAL-START------------
+l = 2.3008999999999999
+z = 4
+lllll = 100 'd'
+adfdsaf = 90
+b = -3
+a = 2
+-----------GLOBAL-END--------------
+
+-----------LOCAL-START-------------
+a = 3
+b = 4
+-----------LOCAL-END--------------
 ===> POSITION:
 [:--end of file--:]
 

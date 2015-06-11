@@ -1,11 +1,18 @@
 #!/bin/bash
 
-NUM=$#
+__SOURCEFILENAME__=$1
+__INPUTFILENAME__=""
+__OUTPUTFILENAME__=""
+__LOGFILENAME__=""
 
 for value in $*; do
-    echo ${value}
-    bash auto-debug ${value}
-    echo "------------------"
+    if [ $value != $__SOURCEFILENAME__  ]; then
+        __INPUTFILENAME__=${value}
+        __OUTPUTFILENAME__=${__SOURCEFILENAME__}_for_${__INPUTFILENAME__}.out
+        __LOGFILENAME__=${__SOURCEFILENAME__}_for_${__INPUTFILENAME__}.log
+        echo ${__LOGFILENAME__}
+        bash auto-debug ${__SOURCEFILENAME__} ${__INPUTFILENAME__} ${__OUTPUTFILENAME__} ${__LOGFILENAME__}
+    fi
 done
 
 echo $#

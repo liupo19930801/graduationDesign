@@ -21,7 +21,7 @@ b.c
 ===> LOCATION:
 /home/primo/workspace/graduationDesign/b.c
 ===> LINES:
-15
+19
 ===> LANGUAGE:
 c.
 ===> DEBUG_FORMAT:
@@ -39,6 +39,56 @@ Partion-2ND:
 
 RUN:{
 
+===> POSITION:
+13	    scanf("%d%d", &a, &b);
+===> INFO
+GLOBAL:
+
+LOCAL:
+a = 0
+b = 0
+===> POSITION:
+14	    printf("[%d, %d]\n", a, b);
+===> INFO:
+GLOBAL:
+
+LOCAL:
+a = 1
+b = 2
+===> POSITION:
+15	    printf("[sum=%d]\n", a+b);
+===> INFO:
+GLOBAL:
+
+LOCAL:
+a = 1
+b = 2
+===> POSITION:
+16	    printf("[ans=%d]\n", a*b);
+===> INFO:
+GLOBAL:
+
+LOCAL:
+a = 1
+b = 2
+===> POSITION:
+17	    return 0;
+===> INFO:
+GLOBAL:
+
+LOCAL:
+a = 1
+b = 2
+===> POSITION:
+18	}
+===> INFO:
+GLOBAL:
+
+LOCAL:
+a = 1
+b = 2
+===> POSITION:
+[:--end of file--:]
 
 }
 

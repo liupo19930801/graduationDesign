@@ -10,6 +10,8 @@
 #include <iomanip>
 #include <cstdlib>
 #include <cstring>
+#include <string>
+#include <regex>/*G++ version >= 4.9*/
 
 using namespace std;
 
@@ -17,7 +19,7 @@ using namespace std;
 #define GDB_NEXT "(gdb) next"
 #define GDB_LOCAL "(gdb) info local"
 #define GDB_SOURCE "(gdb) info source"
-#define GDB_RUN "(gdb) run > /dev/null"
+#define GDB_RUN "(gdb) run"
 
 const int BUFFERSIZE = 1024+5;
 
@@ -62,11 +64,15 @@ private:
     bool handleLanguage();
     bool handleDebugFormat();
 
+    bool isFunctionDeclaration(const char *);
     int lastSpace(const char *);
+    int getGlobalHeader(const char *);
+    
 
 protected:
 
 };
+
 
 LogFilter::LogFilter():logfilename("log"), newfilename("newlog")
 {
@@ -141,11 +147,62 @@ bool LogFilter::IsEndofTheLogFile()
 {
     return this->ifstream_pointer->eof();
 }
+
+bool LogFilter::isFunctionDeclaration(const char *buffer)
+{
+    const string pattern("\\w+\\s+\\([\\w=, <>\\'\\.\\t]*\\)\\s+at\\s+\\w+\\.c:\\d+");
+    const string str(buffer);
+    const regex r(pattern);
+    return regex_match(str, r);
+}
+
+int LogFilter::getGlobalHeader(const char *buffer)
+{
+    const int bufferLength = strlen(buffer);
+    if(bufferLength < 5)
+        return -1;
+    for(int i = 5; i < bufferLength; ++i)
+    {
+        if(' ' == buffer[i-3] && ':' == buffer[i-2] && ':' == buffer[i-1])
+            return i;
+    }
+    return -1;
+}
+
 bool LogFilter::handleNextInfo()
 {
     if(IsEndofTheLogFile()) return false;
 
     writeLineToFile("===> INFO:");
+
+    writeLineToFile("GLOBAL:");
+
+    while(true)
+    {
+        const char *buffer = getNextLine();
+
+        if(buffer == ENDOFFILE) return false;
+
+        if(strcmp(buffer, GDB_LOCAL) == 0)
+        {
+            delete []buffer;
+            break;
+        }
+        
+        const int globalHeader = getGlobalHeader(buffer);
+        
+        if(globalHeader >= 0)
+            writeLineToFile(buffer+globalHeader);
+        else
+            writeLineToFile(buffer);
+        
+        delete []buffer;
+    }
+
+
+
+    writeLineToFile("\nLOCAL:");
+
     while(true)
     {
         const char *buffer = getNextLine();
@@ -160,6 +217,9 @@ bool LogFilter::handleNextInfo()
         writeLineToFile(buffer);
         delete []buffer;
     }
+
+
+
     return true;
 }
 bool LogFilter::handleNextSource()
@@ -183,7 +243,8 @@ bool LogFilter::handleNextSource()
                         buffer[11] = '\0',
                         buffer[BUFFERSIZE-2] = strcmp(buffer, "Breakpoint "),
                         buffer[11]=buffer[BUFFERSIZE-1],
-                        buffer[BUFFERSIZE-2]==0))
+                        buffer[BUFFERSIZE-2]==0)
+                || (isFunctionDeclaration(buffer)))
         {
             delete []buffer;
             continue;
@@ -199,6 +260,10 @@ bool LogFilter::handleNextSource()
         }
         writeLineToFile(buffer);
         delete []buffer;
+        
+        //
+        break;
+        //
     }
     return true;
 }
@@ -210,11 +275,15 @@ bool LogFilter::handleRunEntity()
 {
     while(true)
     {
-        const char *buffer = getNextLine();
+       char *buffer = getNextLine();
 
         if(buffer == ENDOFFILE) return false;
 
-        if(strcmp(buffer, GDB_RUN) == 0)
+        if(buffer[BUFFERSIZE-1] = buffer[9], 
+                buffer[9] = '\0', 
+                buffer[BUFFERSIZE-2] = strcmp(buffer, GDB_RUN),
+                buffer[9] = buffer[BUFFERSIZE-1],
+                buffer[BUFFERSIZE-2] == 0)
         {
             delete []buffer;
             break;
@@ -244,8 +313,39 @@ bool LogFilter::handleRunEntity()
             continue;
         }
         writeLineToFile(buffer);
+        break;
         delete []buffer;
     }
+
+
+    writeLineToFile("===> INFO");
+
+
+    writeLineToFile("GLOBAL:");
+
+    while(true)
+    {
+        const char *buffer = getNextLine();
+
+        if(buffer == ENDOFFILE) return false;
+
+        if(strcmp(buffer, GDB_SOURCE) == 0)
+        {
+            delete []buffer;
+            break;
+        }
+        
+        const int globalHeader = getGlobalHeader(buffer);
+        if(globalHeader >= 0)
+            writeLineToFile(buffer+globalHeader);
+        else
+            writeLineToFile(buffer);
+
+        delete []buffer;
+
+    }
+
+
     while(true)
     {
         const char *buffer = getNextLine();
@@ -259,7 +359,9 @@ bool LogFilter::handleRunEntity()
         }
         delete []buffer;
     }
-    writeLineToFile("===> INFO");
+    
+    writeLineToFile("\nLOCAL:");
+
     while(true)
     {
         const char *buffer = getNextLine();
@@ -274,6 +376,8 @@ bool LogFilter::handleRunEntity()
         writeLineToFile(buffer);
         delete []buffer;
     }
+
+
     return true;
 }
 int LogFilter::lastSpace(const char* str)
@@ -390,6 +494,8 @@ bool LogFilter::handleEntities()
     writeLineToFile("\nFILE{\n");
     handleSoureInfo();
     writeLineToFile("\n}\n");
+
+    //
     this->ifstream_pointer->seekg(0, ios_base::beg);
 
     writeLineToFile("--------------------------------------------------------------------"); 

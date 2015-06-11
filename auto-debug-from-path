@@ -1,15 +1,28 @@
 #!/bin/bash
 
-__path__=$1
+__sourcepath__=$1
+__inputpath__=$2
+__outputpath__=$3
+__logfilepath__=$4
 
-__filelist__=`ls $__path__`
+SOURCEFILELIST=`ls $__sourcepath__`
+INPUTFILELIST=`ls $__inputpath__`
 
-echo $__path__
-echo "------------"
-echo $__filelist__
 
-for __filename__ in $__filelist__
+
+for sourcefile in ${SOURCEFILELIST} ; 
 do
-    echo ------$__filename__
-    bash auto-debug $__filename__
+    for inputfile in ${INPUTFILELIST} ;
+    do
+        outputfile=${__outputpath__}${sourcefile}_for_${inputfile}.out
+        logfile=${__logfilepath__}${sourcefile}_for_${inputfile}.log
+        echo "---------------"
+        echo $sourcefile
+        echo $inputfile
+        echo $outputfile
+        echo $logfile
+        echo $__outputpath__
+        echo "---------------"
+        bash auto-debug $sourcefile $inputfile $outputfile $logfile
+    done
 done

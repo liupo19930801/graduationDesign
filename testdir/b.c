@@ -9,7 +9,11 @@
 
 int main()
 {
-    printf("heelo\n");
+    int a, b;
+    scanf("%d%d", &a, &b);
+    printf("[%d, %d]\n", a, b);
+    printf("[sum=%d]\n", a+b);
+    printf("[ans=%d]\n", a*b);
     return 0;
 }
 
